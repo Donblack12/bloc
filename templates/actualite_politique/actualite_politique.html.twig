@@ -1,0 +1,11 @@
+{# templates/actualite_politique/actualite_politique.html.twig #}
+
+<h1>Actualité Politique Mondiale</h1>
+
+<ul>
+    {% for actualite in actualites %}
+        <li>{{ actualite.titre }}</li>
+        <p>{{ actualite.contenu }}</p>
+        <hr>
+    {% endfor %}
+</ul>
