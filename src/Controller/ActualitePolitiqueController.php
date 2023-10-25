@@ -8,20 +8,21 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ActualitePolitiqueController extends AbstractController
 {
+    private $actualites = [
+        ['titre' => 'Actualité 1', 'contenu' => 'Contenu actualité 1'],
+        ['titre' => 'Actualité 2', 'contenu' => 'Contenu actualité 2'],
+        // Ajoutez d'autres actualités si nécessaire
+    ];
+
     /**
      * @Route("/actualite-politique", name="actualite_politique")
      */
     public function index(): Response
     {
-        $actualites = [
-            ['titre' => 'Actualité 1', 'contenu' => 'Contenu actualité 1'],
-            ['titre' => 'Actualité 2', 'contenu' => 'Contenu actualité 2'],
-            // ... ajoutez d'autres actualités si nécessaire
-        ];
-
         return $this->render('actualite_politique/actualite_politique.html.twig', [
-            'actualites' => $actualites,
+            'actualites' => $this->actualites,
         ]);
-
     }
 }
+
+
