@@ -1,13 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Actualité Politique Mondiale</h1>
+{% block title %}Actualités Politiques - Mon Site{% endblock %}
 
-    <ul>
-        {% for actualite in actualites %}
-            <li>{{ actualite.titre }}</li>
-            <p>{{ actualite.contenu }}</p>
-            <hr>
-        {% endfor %}
-    </ul>
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <h1 class="mt-4">Actualité Politique Mondiale</h1>
+
+                {% for actualite in actualites %}
+                    <div class="card mb-4">
+                        <img class="card-img-top" src="{{ asset('images/actualite' ~ loop.index ~ '.jpg') }}" alt="Image actualité {{ loop.index }}">
+                        <div class="card-body">
+                            <h2 class="card-title">{{ actualite.titre }}</h2>
+                            <p class="card-text">{{ actualite.contenu }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card my-4">
+                    <h5 class="card-header">À la Une</h5>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li>
+                                <h6>Actualité 1</h6>
+                                <p>Bref résumé de l'actualité 1.</p>
+                            </li>
+                            <hr>
+                            <li>
+                                <h6>Actualité 2</h6>
+                                <p>Bref résumé de l'actualité 2.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
