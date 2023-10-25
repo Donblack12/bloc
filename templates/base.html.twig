@@ -1,30 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <!-- ... -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Mon Site{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <!-- ... -->
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}"> <!-- Ajout du CSS personnalisé -->
+    <!-- Ajoutez d'autres liens vers des fichiers CSS si nécessaire -->
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Mon Site</a>
+    <a class="navbar-brand" href="{{ path('accueil') }}">Mon Site</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Accueil <span class="sr-only">(current)</span></a>
+            <li class="nav-item {% if app.request.attributes.get('_route') == 'accueil' %}active{% endif %}">
+                <a class="nav-link" href="{{ path('accueil') }}">Accueil</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Actualités Politiques</a>
+            <li class="nav-item {% if app.request.attributes.get('_route') == 'actualite_politique' %}active{% endif %}">
+                <a class="nav-link" href="{{ path('actualite_politique') }}">Actualités Politiques</a>
             </li>
             <!-- Ajoutez d'autres éléments du menu au besoin -->
         </ul>
     </div>
 </nav>
 
-{% block body %}{% endblock %}
-<!-- ... -->
+<div class="container mt-4">
+    {% block body %}{% endblock %}
+</div>
+
+<!-- Ajoutez des liens vers des fichiers JavaScript si nécessaire -->
+
 </body>
 </html>
