@@ -3,40 +3,96 @@
 {% block title %}Actualités Politiques - Mon Site{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
-                <h1 class="mt-4">Actualité Politique Mondiale</h1>
+    <style>
+        /* Ajout de CSS directement ici pour la démo, idéalement cela devrait être dans un fichier CSS externe */
+        body {
+            font-family: Arial, sans-serif;
+        }
 
-                {% for actualite in actualites %}
-                    <div class="card mb-4">
-                        <img class="card-img-top" src="{{ asset('images/actualite' ~ loop.index ~ '.jpg') }}" alt="Image actualité {{ loop.index }}">
-                        <div class="card-body">
-                            <h2 class="card-title">{{ actualite.titre }}</h2>
-                            <p class="card-text">{{ actualite.contenu }}</p>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
+        main {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px; /* Ajoute de l'espace entre les éléments flex */
+        }
 
-            <div class="col-lg-4">
-                <div class="card my-4">
-                    <h5 class="card-header">À la Une</h5>
-                    <div class="card-body">
-                        <ul class="list-unstyled">
-                            <li>
-                                <h6>Actualité 1</h6>
-                                <p>Bref résumé de l'actualité 1.</p>
-                            </li>
-                            <hr>
-                            <li>
-                                <h6>Actualité 2</h6>
-                                <p>Bref résumé de l'actualité 2.</p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+        section {
+            flex: 3; /* Donne plus d'espace à la section */
+            margin-right: 20px; /* Ajoute un peu plus de marge à droite de la section */
+        }
+
+        aside {
+            flex: 1; /* Alloue moins d'espace à l'aside */
+            padding: 20px;
+            margin-left: 20px; /* Ajoute un peu plus de marge à gauche de l'aside */
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Ajoute une ombre pour un effet de profondeur */
+        }
+
+        /* Ajout d'une bordure entre la section et l'aside pour une séparation visuelle plus claire */
+        section::after {
+            content: "";
+            display: block;
+            position: absolute;
+            right: -10px; /* Ajuster en fonction de la marge réelle entre les deux éléments */
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background-color: #ccc;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 15px;
+        }
+        .c-chapo {
+            font-style: italic;
+            color: #555;
+        }
+        .picture-wrapper {
+            width: 100%; /* fixe la largeur des images */
+            height: 200px; /* fixe la hauteur des images */
+            overflow: hidden; /* cache la partie de l'image qui déborde */
+        }
+        .picture-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* assure que l'image couvre la zone sans perdre ses proportions */
+        }
+        p {
+            text-align: justify;
+            margin-bottom: 1em;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+
+    </style>
+
+    <main>
+        <section>
+            <h1>République démocratique du Congo : les violences ont provoqué le déplacement...</h1>
+            <div class="c-chapo">
+                Les combats se sont intensifiés depuis début octobre au nord de Goma...
             </div>
-        </div>
-    </div>
+            <div class="picture-wrapper">
+                <img src="{{ asset('images/congo.avif') }}" alt="Image du Congo">
+            </div>
+            <p>C'est un record. Environ 6,9 millions de personnes...</p>
+            <!-- D'autres paragraphes ici -->
+        </section>
+
+        <aside>
+            <!-- Contenu de la barre latérale, par exemple des liens vers d'autres articles ou une liste de tags -->
+            <h3>Articles Récents</h3>
+            <ul>
+                <li><a href="#">Article 1</a></li>
+                <li><a href="#">Article 2</a></li>
+                <li><a href="#">Article 3</a></li>
+                <!-- Plus de liens vers d'autres articles -->
+            </ul>
+        </aside>
+    </main>
 {% endblock %}
