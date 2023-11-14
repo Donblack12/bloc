@@ -1,0 +1,5 @@
+# translations/messages.en.yaml
+email.not_blank: 'Please enter a valid email address.'
+password.not_blank: 'Please enter a password.'
+password.min_length: 'Your password should be at least {{ limit }} characters.'
+password.digit_and_uppercase: 'Your password should contain at least one digit and one uppercase letter.'

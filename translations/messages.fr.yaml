@@ -1,0 +1,5 @@
+
+email.not_blank: 'Veuillez saisir une adresse email valide.'
+password.not_blank: 'Veuillez saisir un mot de passe.'
+password.min_length: 'Votre mot de passe doit contenir au moins {{ limit }} caractères.'
+password.digit_and_uppercase: 'Votre mot de passe doit contenir au moins un chiffre et une lettre majuscule.'

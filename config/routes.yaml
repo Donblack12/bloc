@@ -1,8 +1,18 @@
 controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+    resource: '../src/Controller/'
+    type: annotation
+
+accueil:
+    path: /
+    controller: App\Controller\AccueilController::index
+
 actualite_politique:
     path: /actualite-politique
     controller: App\Controller\ActualitePolitiqueController::index
+
+app_logout:
+    path: /logout
+    controller: App\Controller\SecurityController::logout # Assurez-vous que cette méthode existe dans votre SecurityController
+registration:
+    path: /register
+    controller: App\Controller\RegistrationController::register
