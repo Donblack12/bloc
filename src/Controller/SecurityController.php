@@ -2,39 +2,58 @@
 
 namespace App\Controller;
 
-use App\Form\LoginFormType; // Ajoutez cet import
+use App\Security\LoginFormAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use App\Form\LoginFormType;
+
+// Ajoutez cet import
 
 class SecurityController extends AbstractController
 {
     #[Route('/login', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, UserAuthenticatorInterface $userAuthenticator, LoginFormAuthenticator $formAuthenticator, Request $request): Response
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        $form = $this->createForm(LoginFormType::class, [
-            'email' => $lastUsername,
-        ]);
+        // Check if the user is already logged in
+        if ($this->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('actualite_politique');
+        }
 
-        // Check if the user is authenticated
-        $isLoggedIn = $this->isGranted('ROLE_USER');
+        $form = $this->createForm(LoginFormType::class);
+        $form->handleRequest($request);
 
-        return $this->render('security/login.html.twig', [
-            'loginForm' => $form->createView(),
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Ici, on utilise l'authentificateur pour vérifier les informations de l'utilisateur
+            $authResult = $userAuthenticator->authenticateUser(
+                $form->getData(),
+                $formAuthenticator,
+                $request
+            );
+
+            if ($authResult) {
+                // Si l'authentification réussit, redirigez l'utilisateur
+                return $this->redirectToRoute('route_apres_connexion');
+            } else {
+                // Sinon, ajoutez un message d'erreur
+                $error = "Identifiants incorrects. Veuillez réessayer ou créer un compte.";
+            }
+        }
+
+        // Render the login form with potential error
+        return $this->render('login/login.html.twig', [
+            'last_username' => $lastUsername,
             'error' => $error,
-            'isLoggedIn' => $isLoggedIn,
+            'loginForm' => $form->createView(),
         ]);
     }
 
-    #[Route('/logout', name: 'app_logout')]
-    public function logout()
-    {
-        throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
-    }
 }

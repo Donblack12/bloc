@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="card-title">{{ 'Inscriptions'|trans }}</h4>
+                    </div>
+                    <div class="card-body">
+                        {% for flash_error in app.flashes('verify_email_error') %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ flash_error }}
+                            </div>
+                        {% endfor %}
+
+                        {{ form_start(registrationForm, {'attr': {'class': 'form-horizontal'}}) }}
+
+                        <div class="mb-3">
+                            {{ form_label(registrationForm.email) }}
+                            {{ form_widget(registrationForm.email) }}
+                            {{ form_errors(registrationForm.email) }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_label(registrationForm.plainPassword.first) }}
+                            {{ form_widget(registrationForm.plainPassword.first) }}
+                            {{ form_errors(registrationForm.plainPassword.first) }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_label(registrationForm.plainPassword.second) }}
+                            {{ form_widget(registrationForm.plainPassword.second) }}
+                            {{ form_errors(registrationForm.plainPassword.second) }}
+                        </div>
+
+                        {{ form_row(registrationForm.csrf_token) }}
+
+                        <button type="submit" class="btn btn-primary">{{ 'Validé'|trans }}</button>
+
+                        {{ form_end(registrationForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
