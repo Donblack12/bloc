@@ -41,7 +41,7 @@ class SecurityController extends AbstractController
 
             if ($authResult) {
                 // Si l'authentification réussit, redirigez l'utilisateur
-                return $this->redirectToRoute('route_apres_connexion');
+                return $this->redirectToRoute('actualite_politique');
             } else {
                 // Sinon, ajoutez un message d'erreur
                 $error = "Identifiants incorrects. Veuillez réessayer ou créer un compte.";
