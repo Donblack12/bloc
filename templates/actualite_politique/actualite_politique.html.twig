@@ -61,6 +61,52 @@
         h1, h2, h3 {
             color: #333;
         }
+
+        .comment-form {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 600px; /* Largeur maximale pour le formulaire */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            height: 150px; /* Hauteur augmentée pour la zone de texte */
+            margin-bottom: 15px;
+        }
+
+        .comment-form button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .comment-form button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Styles pour les commentaires affichés */
+        .comments {
+            margin-top: 20px;
+        }
+
+        .comment {
+            background-color: #f2f2f2;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
     </style>
 
     <main>
@@ -74,6 +120,22 @@
             </div>
             <p>C'est un record. Environ 6,9 millions de personnes...</p>
             <!-- D'autres paragraphes ici -->
+
+            <!-- Formulaire de commentaire Symfony -->
+            {{ form_start(commentForm) }}
+            {{ form_end(commentForm) }}
+
+            <!-- Afficher les commentaires existants -->
+            <div class="comments">
+                {% for comment in comments %}
+                    <div class="comment">
+                        <p>{{ comment.content }}</p>
+                        <p>Posté le : {{ comment.createdAt|date('d/m/Y H:i') }}</p>
+                    </div>
+                {% else %}
+                    <p>Pas de commentaires pour l'instant.</p>
+                {% endfor %}
+            </div>
         </section>
 
         <div>
