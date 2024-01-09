@@ -21,6 +21,12 @@ class Comment
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 
+    // Ajout du champ sujetId
+    #[ORM\Column(type: Types::STRING)]
+    private ?string $sujetId = null;
+
+    // Getters et Setters existants
+
     public function getId(): ?int
     {
         return $this->id;
@@ -47,5 +53,19 @@ class Comment
     public function setCreatedAtValue(): void
     {
         $this->createdAt = new \DateTime();
+    }
+
+    // Getters et Setters pour sujetId
+
+    public function getSujetId(): ?string
+    {
+        return $this->sujetId;
+    }
+
+    public function setSujetId(string $sujetId): self
+    {
+        $this->sujetId = $sujetId;
+
+        return $this;
     }
 }

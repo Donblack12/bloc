@@ -1,14 +1,14 @@
 <?php
-
 namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Form\CommentFormType;
-use App\Repository\CommentRepository; // Assurez-vous d'importer le CommentRepository
+use App\Repository\CommentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ActualitePolitiqueController extends AbstractController
 {
@@ -19,29 +19,32 @@ class ActualitePolitiqueController extends AbstractController
     ];
 
     /**
-     * @Route("/actualite-politique", name="actualite_politique")
+     * @Route("/actualite-politique/{titre}", name="actualite_politique")
      */
-    public function index(Request $request, CommentRepository $commentRepository): Response
+    public function index(Request $request, CommentRepository $commentRepository, EntityManagerInterface $entityManager): Response
     {
+        // Création et gestion du formulaire de commentaire
         $comment = new Comment();
         $form = $this->createForm(CommentFormType::class, $comment);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $comment->setSujetId('rdc'); // Définition du sujet_id comme 'rdc'
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('actualite_politique');
+            // Redirection pour rafraîchir et montrer le nouveau commentaire
+            return $this->redirectToRoute('actualite_politique');;
         }
 
-        // Utilisation de l'injection de dépendance pour le repository
-        $comments = $commentRepository->findAll();
+        // Récupération des commentaires pour 'rdc'
+        $comments = $commentRepository->findBy(['sujetId' => 'rdc']);
 
+        // Envoi des données au template
         return $this->render('actualite_politique/actualite_politique.html.twig', [
-            'actualites' => $this->actualites,
-            'commentForm' => $form->createView(), // Assurez-vous que cette clé correspond à celle utilisée dans le template Twig
+            'commentForm' => $form->createView(),
             'comments' => $comments,
         ]);
     }
 }
+

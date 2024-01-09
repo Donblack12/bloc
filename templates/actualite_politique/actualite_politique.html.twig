@@ -110,6 +110,7 @@
     </style>
 
     <main>
+
         <section>
             <h1>République démocratique du Congo : les violences ont provoqué le déplacement...</h1>
             <div class="c-chapo">
@@ -128,15 +129,18 @@
             <!-- Afficher les commentaires existants -->
             <div class="comments">
                 {% for comment in comments %}
-                    <div class="comment">
-                        <p>{{ comment.content }}</p>
-                        <p>Posté le : {{ comment.createdAt|date('d/m/Y H:i') }}</p>
-                    </div>
+                    {% if comment.sujetId == 'rdc' %}
+                        <div class="comment">
+                            <p>{{ comment.content }}</p>
+                            <p>Posté le : {{ comment.createdAt|date('d/m/Y H:i') }}</p>
+                        </div>
+                    {% endif %}
                 {% else %}
                     <p>Pas de commentaires pour l'instant.</p>
                 {% endfor %}
             </div>
         </section>
+
 
         <div>
             <aside>
